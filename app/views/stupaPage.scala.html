@@ -2,7 +2,6 @@
 @import helper._
 <head>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdTww020RtKNJtrIzb-miqI-Kq3YKdPAQ"></script>
-@scripts = {
     <script type="text/javascript">
         var map;
         function initialize() {
@@ -25,7 +24,7 @@
             marker.setMap(map);
         }
     </script>
-}
+
 </head>
 <body>
     <h1> Stupas Overview </h1>
@@ -55,7 +54,6 @@
         @helper.inputFile(stupaForm("picture"))
         <button type="submit" name="addPrayer" >Submit Stupa</button>
     }
-
 
 </body>
 
