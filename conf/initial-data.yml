@@ -1,0 +1,29 @@
+prayers:
+  - !!models.Prayer
+    name:         Om Mani Padme Hung
+    desc:         The OG prayer for OG's
+    englishText:  Om Mani Padme Hung
+    prayerText:   This Should Be In Tibetan
+
+  - !!models.Prayer
+    name:         Seven Line Prayer
+    desc:         A prayer in seven lines, it is pretty long.
+    englishText:  >
+                    hung orgyen yul gyi nubjang tsam
+                    pema gesar dongpo la
+                    yatsen chok gi ngödrub nyé
+                    pema jungné shyé su drak
+                    khor du khandro mangpö kor
+                    khyé kyi jesu dak drub kyi
+                    jingyi lab chir shek su sol
+                    guru pema siddhi hung
+    prayerText:   This should also be in tibetan
+
+
+stupas:
+
+  - !!models.Stupa
+    stupaName:    Migyur Dorje
+    descritpion:  A stupa near KPC in Poolsville MD
+    latitude:     0.0
+    longitude:    0.0

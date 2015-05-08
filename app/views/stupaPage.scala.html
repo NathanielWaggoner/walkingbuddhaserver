@@ -1,0 +1,62 @@
+@(stupas:List[Stupa], stupaForm:Form[Stupa])
+@import helper._
+<head>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdTww020RtKNJtrIzb-miqI-Kq3YKdPAQ"></script>
+@scripts = {
+    <script type="text/javascript">
+        var map;
+        function initialize() {
+            var mapOptions = {
+                center: { lat: -34.397, lng: 150.644},
+                zoom: 8
+            };
+            map = new google.maps.Map(document.getElementById('map_canvas'),
+                    mapOptions);
+            console.log("map should be init now");
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function addLocation(lat, lon, name) {
+            var latLng = new google.maps.LatLng(lat,lon);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                title:name
+            });
+            marker.setMap(map);
+        }
+    </script>
+}
+</head>
+<body>
+    <h1> Stupas Overview </h1>
+    <div id="map_canvas" style="height: 430px; width: 512px; float:right; top:0px"></div>
+
+    <ul>
+        @for(stupa <- stupas) {
+         <li>@stupa.stupaName</li>
+            <ul>
+                <li>Description: @stupa.descritpion</li>
+                <li>Latitude: @stupa.latitude</li>
+                <li>Longitude: @stupa.longitude</li>
+                <img src="@routes.StupaController.getImageForStupa(stupa.stupaName)"/>
+                @form(routes.StupaController.delete(stupa.stupaName)) {
+                    <input type="submit" value="Remove Stupa">
+                }
+                @scripts.addLocation(stupa.latitude,stupa.longitude,stupa.stupaName)
+            </ul>
+        }
+
+    </ul>
+
+    @helper.form(action = routes.StupaController.submit, 'enctype -> "multipart/form-data") {
+        @helper.inputText(stupaForm("stupaName"))
+        @helper.inputText(stupaForm("description"))
+        @helper.inputText(stupaForm("latitude"))
+        @helper.inputText(stupaForm("longitude"))
+        @helper.inputFile(stupaForm("picture"))
+        <button type="submit" name="addPrayer" >Submit Stupa</button>
+    }
+
+
+</body>
+

@@ -1,0 +1,29 @@
+@(prayers:List[Prayer], prayerForm:Form[Prayer])
+@import helper._
+
+<h1> Prayers Overview </h1>
+
+<ul>
+    @for(prayer <- prayers) {
+
+    <li>@prayer.name
+        <ul>
+            <li>Description: @prayer.desc</li>
+            <li>English: @prayer.englishText</li>
+            <li>Tibetan: @prayer.prayerText</li>
+            @form(routes.PrayerController.delete(prayer.name)) {
+                <input type="submit" value="Remove Prayer">
+            }
+        </ul>
+    </li>
+
+    }
+</ul>
+
+@helper.form(action = routes.PrayerController.submit) {
+    @helper.inputText(prayerForm("name"))
+    @helper.inputText(prayerForm("desc"))
+    @helper.inputText(prayerForm("englishText"))
+    @helper.inputText(prayerForm("prayerText"))
+    <button type="submit" name="addPrayer" >Submit new Prayer</button>
+}
