@@ -17,12 +17,15 @@ public class Stupa extends Model {
     public String latitude;
     public String longitude;
     public String stupaImagePath;
+    public String stupaVideoPath;
 
-    public Stupa(String stupaName, String descritpion, String latitude, String longitude, String stupaImagePath) {
+    public Stupa(String stupaName, String descritpion, String latitude, String longitude, String stupaImagePath,String stupaVideoPath) {
         this.stupaName = stupaName;
         this.descritpion = descritpion;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.stupaImagePath = stupaImagePath;
+        this.stupaVideoPath = stupaVideoPath;
     }
 
     public static Finder<String,Stupa> find = new Finder<String, Stupa>(String.class, Stupa.class);

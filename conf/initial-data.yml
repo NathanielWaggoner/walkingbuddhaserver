@@ -19,11 +19,26 @@ prayers:
                     guru pema siddhi hung
     prayerText:   This should also be in tibetan
 
-
 stupas:
-
   - !!models.Stupa
     stupaName:    Migyur Dorje
     descritpion:  A stupa near KPC in Poolsville MD
     latitude:     0.0
     longitude:    0.0
+
+  - !!models.Stupa
+      stupaName:    Stupa 2
+      descritpion:  Another stupa its fucked
+      latitude:     100
+      longitude:    100
+
+users:
+  - !!models.User
+    email:    nathaniel@gmail.com
+    name:     nathaniel
+    password: secret
+
+  - !!models.User
+      email:    nathaniel@gmail.com
+      name:     nathaniel
+      password: secret

@@ -1,27 +1,45 @@
 @(stupas:List[Stupa], stupaForm:Form[Stupa])
 @import helper._
 <head>
-<script type="text/javascript" src="googleMapsKey"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdTww020RtKNJtrIzb-miqI-Kq3YKdPAQ"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-2.1..min.js")"></script>
     <script type="text/javascript">
         var map;
+        var locations = []
+        var centerLocation;
+        // this runs after the scala template code does.  We need to let the scale push our stupa locations into the locations[],
+        // and then whwnever maps inits we can draw the markers using that list
         function initialize() {
+            // defaults should be passed in?  based on user location?  probably user location
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    centerLocation = new google.maps.LatLng(latitude, longitude);
+                    map.setCenter(centerLocation)
+                })
+            }
             var mapOptions = {
-                center: { lat: -34.397, lng: 150.644},
+                center:{lat:39,lng:76},
                 zoom: 8
             };
             map = new google.maps.Map(document.getElementById('map_canvas'),
                     mapOptions);
-            console.log("map should be init now");
+            for(var loc in locations) {
+                var latLng = new google.maps.LatLng(locations[loc].lat,locations[loc].lng);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    title: locations[loc].name,
+                    map: map
+                });
+            }
         }
         google.maps.event.addDomListener(window, 'load', initialize);
 
-        function addLocation(lat, lon, name) {
-            var latLng = new google.maps.LatLng(lat,lon);
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                title:name
-            });
-            marker.setMap(map);
+        function addLocation(lat, lng, name) {
+            console.log("lat: "+lat+" lon: "+lng+" name: "+name);
+            var marker = {name:name,lat:lat,lng:lng}
+            locations.push(marker)
         }
     </script>
 
@@ -41,6 +59,9 @@
                 @form(routes.StupaController.delete(stupa.stupaName)) {
                     <input type="submit" value="Remove Stupa">
                 }
+                <script>
+                    javascript:addLocation('@stupa.latitude','@stupa.longitude','@stupa.stupaName')
+                </script>
             </ul>
         }
 
@@ -52,6 +73,7 @@
         @helper.inputText(stupaForm("latitude"))
         @helper.inputText(stupaForm("longitude"))
         @helper.inputFile(stupaForm("picture"))
+        @helper.inputFile(stupaForm("video"))
         <button type="submit" name="addPrayer" >Submit Stupa</button>
     }
 

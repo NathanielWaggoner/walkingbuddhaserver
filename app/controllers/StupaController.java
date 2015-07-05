@@ -31,20 +31,32 @@ public class StupaController extends Controller {
         Form<Stupa> filledForm= stupaForm.bindFromRequest();
         MultipartFormData body = request().body().asMultipartFormData();
         FilePart picture = body.getFile("picture");
+        FilePart video = body.getFile("video");
+        Stupa toSave = filledForm.get();
         if(picture!=null) {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
-
             File file = picture.getFile();
-            Stupa toSave = filledForm.get();
-
             toSave.stupaImagePath = file.getAbsolutePath();
-            toSave.save();
-            return stupaPage();
-        }else {
-            flash("error","Missing File");
-            return redirect(routes.StupaController.stupaPage());
+        } else {
+            return fail("missing picture file");
         }
+        if(video!=null) {
+            String videoFileName = video.getFilename();
+            String contentType = video.getContentType();
+            File file = video.getFile();
+            toSave.stupaVideoPath = file.getAbsolutePath();
+        } else {
+            return fail("Missing video file");
+        }
+        toSave.save();
+        return stupaPage();
+
+    }
+
+    public static Result fail(String msg) {
+        flash("error",msg);
+        return redirect(routes.StupaController.stupaPage());
     }
     public static Result delete(String name) {
         if(name!=null) {

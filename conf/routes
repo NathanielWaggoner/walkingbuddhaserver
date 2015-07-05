@@ -3,7 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /index                           controllers.Application.index()
+
+# Authentication
+GET     /login                              controllers.Application.login()
+POST    /login                              controllers.Application.authenticate()
+GET     /logout                             controllers.Application.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -20,3 +25,4 @@ GET     /stupas/display           controllers.StupaController.stupaPage()
 GET     /stupas/image             controllers.StupaController.getImageForStupa(String)
 POST    /stupas/new               controllers.StupaController.submit()
 POST    /stupas/delete            controllers.StupaController.delete(String)
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

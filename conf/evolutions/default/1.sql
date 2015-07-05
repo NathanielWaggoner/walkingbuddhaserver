@@ -17,12 +17,22 @@ create table stupa (
   latitude                  varchar(255),
   longitude                 varchar(255),
   stupa_image_path          varchar(255),
+  stupa_video_path          varchar(255),
   constraint pk_stupa primary key (stupa_name))
+;
+
+create table account (
+  email                     varchar(255) not null,
+  name                      varchar(255),
+  password                  varchar(255),
+  constraint pk_account primary key (email))
 ;
 
 create sequence prayer_seq;
 
 create sequence stupa_seq;
+
+create sequence account_seq;
 
 
 
@@ -35,9 +45,13 @@ drop table if exists prayer;
 
 drop table if exists stupa;
 
+drop table if exists account;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists prayer_seq;
 
 drop sequence if exists stupa_seq;
+
+drop sequence if exists account_seq;
 
